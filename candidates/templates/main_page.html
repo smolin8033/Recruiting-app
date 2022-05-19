@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h3>All candidates:</h3>
+{% for candidate in candidate_list %}
+    {{ candidate }} <br>
+    {% for tag in candidate.tags.all %}
+    {{ tag }}:
+    {{ tag.values.all|join:", " }} <br>
+    {% endfor %} <br>
+{% endfor %}
+{% endblock %}
