@@ -1,6 +1,6 @@
 from django.contrib.auth import login, authenticate
 from django.http import HttpResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import DetailView, ListView
 
 from .forms import LoginForm
@@ -18,7 +18,8 @@ def login_view(request):
                 if user.is_superuser:
                     return redirect('admin:index')
                 else:
-                    pass
+                    candidate = get_object_or_404(Candidate, user=request.user)
+                    return redirect('candidate', pk=candidate.id)
             else:
                 return HttpResponse('Please, enter valid login and password')
     else:
