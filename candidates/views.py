@@ -1,7 +1,7 @@
 from django.contrib.auth import login, authenticate
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
-from django.views.generic import DetailView
+from django.views.generic import DetailView, ListView
 
 from .forms import LoginForm
 from .models import Candidate
@@ -29,3 +29,8 @@ def login_view(request):
 class CandidateDetailView(DetailView):
     model = Candidate
     template_name = 'candidate.html'
+
+
+class CandidateListView(ListView):
+    model = Candidate
+    template_name = 'main_page.html'
