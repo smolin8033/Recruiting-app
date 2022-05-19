@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    {{ candidate }} <br>
+    {% for tag in candidate.tags.all %}
+    {{ tag }}:
+    {{ tag.values.all|join:", " }} <br>
+    {% endfor %}
+
+{% endblock %}
