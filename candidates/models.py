@@ -7,13 +7,22 @@ class Candidate(models.Model):
     first_name = models.CharField(max_length=50)
     second_name = models.CharField(max_length=50)
 
+    def __str__(self):
+        return f'{self.first_name} {self.second_name}'
+
 
 class Tag(models.Model):
     name = models.CharField(max_length=50)
     candidate = models.ForeignKey(Candidate, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return str(self.name)
 
 
 class Value(models.Model):
     name = models.CharField(max_length=50)
     tag = models.ForeignKey(Tag, on_delete=models.CASCADE)
     candidate = models.ForeignKey(Candidate, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return str(self.name)
