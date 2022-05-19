@@ -13,7 +13,7 @@ class Candidate(models.Model):
 
 class Tag(models.Model):
     name = models.CharField(max_length=50)
-    candidate = models.ForeignKey(Candidate, on_delete=models.CASCADE)
+    candidate = models.ForeignKey(Candidate, related_name='tags', on_delete=models.CASCADE)
 
     def __str__(self):
         return str(self.name)
@@ -22,7 +22,7 @@ class Tag(models.Model):
 class Value(models.Model):
     name = models.CharField(max_length=50)
     tag = models.ForeignKey(Tag, on_delete=models.CASCADE)
-    candidate = models.ForeignKey(Candidate, on_delete=models.CASCADE)
+    candidate = models.ForeignKey(Candidate, related_name='values', on_delete=models.CASCADE)
 
     def __str__(self):
         return str(self.name)
