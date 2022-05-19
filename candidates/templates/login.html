@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Recruitment website</title>
+</head>
+<body bgcolor="c0c0c0">
+<center>
+<h3>Recruitment website</h3>
+<p>Please, enter your login and password:</p>
+<form action="" method="POST">{% csrf_token %}
+{{ form.as_p }}
+<input type="submit" value="Log in">
+</form>
+</center>
+
+</body>
+</html>
