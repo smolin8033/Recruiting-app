@@ -6,6 +6,9 @@
     {% for tag in candidate.tags.all %}
     {{ tag }}:
     {{ tag.values.all|join:", " }} <br>
-    {% endfor %}
+    {% endfor %} <br>
+    <form action="{% url 'add_tags' pk=candidate.id %}">
+        <input type="submit" value="And tag and value" />
+    </form>
 
 {% endblock %}

@@ -39,6 +39,13 @@ class CandidateListView(ListView):
 
 def tag_create(request, pk):
     form = TagCreateForm(request.POST or None)
+    candidate = get_object_or_404(Candidate, pk=pk)
     if form.is_valid():
-        form.save()
+        tag = form.save()
+        candidate.tags.add(tag)
         return redirect('candidate', pk=pk)
+    context = {
+        'form': form,
+        'candidate': candidate,
+    }
+    return render(request, 'add_tag.html', context)

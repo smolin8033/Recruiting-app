@@ -11,8 +11,8 @@ class LoginForm(forms.Form):
 class TagCreateForm(forms.ModelForm):
     name = forms.CharField(label='Add info tag:', max_length=50)
     values = forms.ModelMultipleChoiceField(
-        queryset=Value.objects.all(),
-        widget = forms.CheckboxSelectMultiple
+         queryset=Value.objects.all(),
+         widget = forms.CheckboxSelectMultiple
     )
 
     class Meta:
