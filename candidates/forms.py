@@ -28,3 +28,8 @@ class ValueForm(forms.ModelForm):
             'name',
             'tag',
         ]
+
+# checkboxes django
+# form /
+# fbv
+# просто без формы попробовать
