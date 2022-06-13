@@ -8,13 +8,16 @@ class LoginForm(forms.Form):
     password = forms.CharField(widget=forms.PasswordInput)
 
 
-class TagForm(forms.ModelForm):
+class TagCreateForm(forms.ModelForm):
     name = forms.CharField(label='Add info tag:', max_length=50)
-    candidate = forms.ModelChoiceField(queryset=Candidate.objects.all())
+    values = forms.ModelMultipleChoiceField(
+        queryset=Value.objects.all(),
+        widget = forms.CheckboxSelectMultiple
+    )
 
     class Meta:
         model = Tag
-        fields = ['name']
+        fields = ['name', 'values']
 
 
 class ValueForm(forms.ModelForm):

@@ -1,10 +1,10 @@
 from django.contrib.auth import login, authenticate
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
-from django.views.generic import DetailView, ListView
+from django.views.generic import DetailView, ListView, CreateView
 
-from .forms import LoginForm
-from .models import Candidate
+from .forms import LoginForm, TagCreateForm
+from .models import Candidate, Tag
 
 
 def login_view(request):
@@ -35,3 +35,10 @@ class CandidateDetailView(DetailView):
 class CandidateListView(ListView):
     model = Candidate
     template_name = 'main_page.html'
+
+
+def tag_create(request, pk):
+    form = TagCreateForm(request.POST or None)
+    if form.is_valid():
+        form.save()
+        return redirect('candidate', pk=pk)
