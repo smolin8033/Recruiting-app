@@ -5,7 +5,10 @@
     {{ candidate }} <br>
     {% for tag in candidate.tags.all %}
     {{ tag }}:
-    {{ tag.values.all|join:", " }} <br>
+    {{ tag.values.all|join:", " }}
+    <form action="{% url 'delete_tag' pk=tag.id candidate_id=candidate.id %}">
+        <input type="submit" value="Delete this tag" />
+    </form> <br>
     {% endfor %} <br>
     <form action="{% url 'add_tags' pk=candidate.id %}">
         <input type="submit" value="And tag and value" />

@@ -1,5 +1,5 @@
 from django.contrib.auth import login, authenticate
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import DetailView, ListView, CreateView
 
@@ -62,3 +62,15 @@ def tag_create(request, pk):
         'candidate': candidate,
     }
     return render(request, 'add_tag.html', context)
+
+
+def tag_delete(request, pk, candidate_id):
+    tag = get_object_or_404(Tag, pk=pk)
+    if request.method == 'POST':
+        tag.delete()
+        return redirect('candidate', pk=candidate_id)
+    context = {
+        'tag': tag,
+        'candidate_id': candidate_id,
+    }
+    return render(request, 'delete_tag.html', context)

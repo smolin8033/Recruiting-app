@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<form action="." method="POST">{% csrf_token %}
+    <h4>Are you sure you want to delete the tag: {{ tag }}</h4>
+    <input type="submit" value="Delete" />
+</form> <br>
+<form action="{% url 'candidate' pk=candidate_id %}">
+    <input type="submit" value="Cancel" />
+</form>
+
+{% endblock %}
