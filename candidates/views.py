@@ -45,9 +45,16 @@ def tag_create(request, pk):
         values = request.POST.getlist('add_values')
         tag_object = Tag(name=tag)
         tag_object.save()
+
         for value in values:
             value = get_object_or_404(Value, name=value)
             tag_object.values.add(value)
+
+        if request.POST.get('new_value'):
+            new_value = request.POST.get('new_value')
+            new_value = Value.objects.create(name=new_value)
+            tag_object.values.add(new_value)
+
         candidate.tags.add(tag_object)
         return redirect('candidate', pk=pk)
     context = {

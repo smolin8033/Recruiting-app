@@ -12,8 +12,10 @@
     <label for="{{v}}">{{v}}</label>
     {% endfor %}
 </fieldset> <br>
+<input type="text" placeholder="Enter new value to this tag" name="new_value"/>
 <button type="submit">Submit</button>
 </form> <br>
+
 <form action="{% url 'candidate' pk=candidate.id %}">
     <input type="submit" value="Cancel" />
 </form>
