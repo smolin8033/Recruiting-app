@@ -3,8 +3,8 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import DetailView, ListView, CreateView
 
-from .forms import LoginForm, TagCreateForm
-from .models import Candidate, Tag
+from .forms import LoginForm # TagCreateForm
+from .models import Candidate, Tag, Value
 
 
 def login_view(request):
@@ -38,14 +38,20 @@ class CandidateListView(ListView):
 
 
 def tag_create(request, pk):
-    form = TagCreateForm(request.POST or None)
     candidate = get_object_or_404(Candidate, pk=pk)
-    if form.is_valid():
-        tag = form.save()
-        candidate.tags.add(tag)
+    values_queryset = Value.objects.all()
+    if request.method == 'POST':
+        tag = request.POST.get('new_tag')
+        values = request.POST.getlist('add_values')
+        tag_object = Tag(name=tag)
+        tag_object.save()
+        for value in values:
+            value = get_object_or_404(Value, name=value)
+            tag_object.values.add(value)
+        candidate.tags.add(tag_object)
         return redirect('candidate', pk=pk)
     context = {
-        'form': form,
+        'values_queryset': values_queryset,
         'candidate': candidate,
     }
     return render(request, 'add_tag.html', context)

@@ -2,9 +2,17 @@
 
 {% block content %}
 
-<form action="." method="POST">{% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Save" />
+<form method="POST"> {% csrf_token %}
+<input type="text" placeholder="Enter new tag" name="new_tag"/>
+<br> <br>
+<fieldset>
+    <legend>Choose values for the tag:</legend>
+    {% for v in values_queryset %}
+    <input type="checkbox" name="add_values" id="{{v.id}}" value="{{v}}">
+    <label for="{{v}}">{{v}}</label>
+    {% endfor %}
+</fieldset> <br>
+<button type="submit">Submit</button>
 </form> <br>
 <form action="{% url 'candidate' pk=candidate.id %}">
     <input type="submit" value="Cancel" />
