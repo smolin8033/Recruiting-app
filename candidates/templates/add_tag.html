@@ -1,7 +1,11 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
+<center>
+    <form action="{% url 'logout' %}" method="POST">{% csrf_token %}
+        <input type="submit" value="Log out">
+    </form>
+</center>
 <form method="POST"> {% csrf_token %}
 <input type="text" placeholder="Enter new tag" name="new_tag"/>
 <br> <br>

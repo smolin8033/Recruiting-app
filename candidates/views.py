@@ -1,4 +1,4 @@
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import DetailView, ListView, CreateView
@@ -50,6 +50,12 @@ def login_view(request):
     else:
         form = LoginForm()
     return render(request, "login.html", {"form": form})
+
+
+def logout_view(request):
+    if request.method == "POST":
+        logout(request)
+        return redirect('login')
 
 
 class CandidateDetailView(DetailView):
