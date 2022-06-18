@@ -3,8 +3,33 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import DetailView, ListView, CreateView
 
-from .forms import LoginForm # TagCreateForm
+from .forms import LoginForm, SignupForm
 from .models import Candidate, Tag, Value
+
+
+def signup_view(request):
+    if request.method == 'POST':
+        form = SignupForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get('username')
+            raw_password = form.cleaned_data.get('password1')
+            user = authenticate(username=username, password=raw_password)
+            user.first_name = form.cleaned_data.get('first_name')
+            user.last_name = form.cleaned_data.get('last_name')
+            candidate = Candidate.objects.create(
+                user=user,
+                first_name=user.first_name,
+                second_name=user.last_name,
+            )
+            login(request, user)
+            return redirect('candidate', pk=candidate.id)
+    else:
+        form = SignupForm()
+    context = {
+        'form': form,
+    }
+    return render(request, 'signup.html', context)
 
 
 def login_view(request):
