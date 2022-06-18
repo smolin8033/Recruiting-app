@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<center>
+    <form action="{% url 'logout' %}" method="POST">{% csrf_token %}
+        <input type="submit" value="Log out">
+    </form>
+</center>
+<form method="POST"> {% csrf_token %}
+<fieldset>
+    <legend>Unselect values for the tag: {{ tag }}</legend>
+    {% for v in selected_queryset %}
+    <input type="checkbox" name="unselect_values" id="{{v.id}}" value="{{v}}">
+    <label for="{{v}}">{{v}}</label>
+    {% endfor %}
+</fieldset> <br>
+<fieldset>
+    <legend>Select values for the tag: {{ tag }}</legend>
+    {% for v in unselected_queryset %}
+    <input type="checkbox" name="select_values" id="{{v.id}}" value="{{v}}">
+    <label for="{{v}}">{{v}}</label>
+    {% endfor %}
+</fieldset> <br>
+<input type="text" placeholder="Enter new value to this tag" name="new_value"/>
+<button type="submit">Submit</button>
+</form> <br>
+
+<form action="{% url 'candidate' pk=candidate.id %}">
+    <input type="submit" value="Cancel" />
+</form>
+{% endblock %}

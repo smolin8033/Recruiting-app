@@ -12,9 +12,12 @@
     {{ tag.values.all|join:", " }}
     <form action="{% url 'delete_tag' pk=tag.id candidate_id=candidate.id %}">
         <input type="submit" value="Delete this tag" />
+    </form>
+    <form action="{% url 'update_tag' pk=tag.id candidate_id=candidate.id %}">
+        <input type="submit" value="Update" />
     </form> <br>
     {% endfor %} <br>
-    <form action="{% url 'add_tags' pk=candidate.id %}">
+    <form action="{% url 'add_tag' pk=candidate.id %}">
         <input type="submit" value="And tag and value" />
     </form>
 

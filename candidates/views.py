@@ -105,3 +105,39 @@ def tag_delete(request, pk, candidate_id):
         'candidate_id': candidate_id,
     }
     return render(request, 'delete_tag.html', context)
+
+
+def tag_update(request, pk, candidate_id):
+    candidate = get_object_or_404(Candidate, pk=candidate_id)
+    tag = get_object_or_404(Tag, pk=pk)
+
+    selected_queryset = tag.values.all()
+    all_values = Value.objects.all()
+    unselected_queryset = all_values.difference(selected_queryset)
+
+    if request.method == 'POST':
+        unselected_values = request.POST.getlist('unselect_values')
+        selected_values = request.POST.getlist('select_values')
+
+        for value in unselected_values:
+            value = get_object_or_404(Value, name=value)
+            tag.values.remove(value)
+        
+        for value in selected_values:
+            value = get_object_or_404(Value, name=value)
+            tag.values.add(value)
+
+        if request.POST.get('new_value'):
+            new_value = request.POST.get('new_value')
+            new_value = Value.objects.create(name=new_value)
+            tag.values.add(new_value)
+
+        return redirect('candidate', pk=candidate_id)
+
+    context = {
+        'candidate': candidate,
+        'tag': tag,
+        'selected_queryset': selected_queryset,
+        'unselected_queryset': unselected_queryset,
+    }
+    return render(request, 'update_tag.html', context)
